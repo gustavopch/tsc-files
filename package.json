@@ -1,0 +1,26 @@
+{
+  "name": "tsc-files",
+  "version": "0.0.0",
+  "description": "A tiny tool to run tsc on specific files without ignoring tsconfig.json",
+  "license": "MIT",
+  "author": "Gustavo P. Cardoso <https://twitter.com/gustavo_pch>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gustavopch/tsc-files.git"
+  },
+  "bin": {
+    "tsc-files": "lib/index.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "yargs-parser": "^18.1.1"
+  },
+  "peerDependencies": {
+    "typescript": "3.x"
+  },
+  "devDependencies": {
+    "typescript": "3.8.3"
+  }
+}

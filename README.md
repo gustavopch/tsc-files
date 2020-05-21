@@ -18,7 +18,7 @@ yarn add -D tsc-files
 
 I wanted to type-check **only the staged files** with [lint-staged](https://github.com/okonet/lint-staged).
 
-Unfortunately passing specific files like `tsc --notEmit file1.ts file2.ts` will cause TypeScript to simply ignore your `tsconfig.json`.
+Unfortunately passing specific files like `tsc --noEmit file1.ts file2.ts` will cause TypeScript to simply ignore your `tsconfig.json`.
 
 There's already an open issue in the TypeScript repo to support this use case — you may want to give a 👍 there: https://github.com/microsoft/TypeScript/issues/27379
 

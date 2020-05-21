@@ -27,9 +27,6 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "dependencies": {
-    "yargs-parser": "^18.1.1"
-  },
   "peerDependencies": {
     "typescript": "3.x"
   },

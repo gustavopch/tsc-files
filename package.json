@@ -28,7 +28,7 @@
     "trailingComma": "all"
   },
   "peerDependencies": {
-    "typescript": "3.x"
+    "typescript": ">=3"
   },
   "devDependencies": {
     "@commitlint/cli": "8.3.5",

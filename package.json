@@ -31,9 +31,9 @@
     "typescript": ">=3"
   },
   "devDependencies": {
-    "@commitlint/cli": "8.3.5",
-    "@commitlint/config-conventional": "8.3.4",
-    "husky": "4.2.3",
-    "typescript": "3.8.3"
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
+    "husky": "4.3.6",
+    "typescript": "4.1.3"
   }
 }

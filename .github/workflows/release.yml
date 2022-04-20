@@ -1,7 +1,9 @@
 name: Release
 
-# run the workflow only manually
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - master
 
 env:
   CI: true

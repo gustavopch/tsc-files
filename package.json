@@ -1,5 +1,5 @@
 {
-  "name": "tsc-files",
+  "name": "@resolritter/tsc-files",
   "version": "0.0.0",
   "description": "A tiny tool to run tsc on specific files without ignoring tsconfig.json",
   "license": "MIT",

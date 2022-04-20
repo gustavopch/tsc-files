@@ -1,5 +1,8 @@
 name: Release
 
+# run the workflow only manually
+on: workflow_dispatch
+
 env:
   CI: true
 

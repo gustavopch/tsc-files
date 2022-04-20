@@ -1,7 +1,5 @@
 # tsc-files
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gustavopch/tsc-files/Release?style=flat-square)
-
 A tiny tool to run `tsc` on specific files without ignoring `tsconfig.json`.
 
 ## Installation

@@ -35,5 +35,8 @@
     "@commitlint/config-conventional": "11.0.0",
     "husky": "4.3.6",
     "typescript": "4.1.3"
+  },
+  "dependencies": {
+    "jsonc-simple-parser": "^2.2.1"
   }
 }

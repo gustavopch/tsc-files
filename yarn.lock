@@ -596,6 +596,13 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.yarnpkg.com/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
+jsonc-simple-parser@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/jsonc-simple-parser/-/jsonc-simple-parser-2.2.1.tgz#f5a0586792f2ad93f7d563ce27968e9c7fe59c65"
+  integrity sha512-cbZ4y7sbz5TiZiPwchLkQvmtqehyp7Xfa4/HluX6Z/EtuIhrw8H5moMx55XWYXx4EJ3A1xyPO3hXtXibzzsCvg==
+  dependencies:
+    reghex "^3.0.0"
+
 jsonfile@^6.0.1:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-6.1.0.tgz#bc55b2634793c679ec6403094eb13698a6ec0aae"
@@ -879,6 +886,11 @@ regenerator-runtime@^0.13.4:
   version "0.13.7"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
   integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
+
+reghex@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/reghex/-/reghex-3.0.2.tgz#984045126642ee0709c3e10727e7041112281330"
+  integrity sha512-Zb9DJ5u6GhgqRSBnxV2QSnLqEwcKxHWFA1N2yUa4ZUAO1P8jlWKYtWZ6/ooV6yylspGXJX0O/uNzEv0xrCtwaA==
 
 require-directory@^2.1.1:
   version "2.1.1"

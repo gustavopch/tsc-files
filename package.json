@@ -37,5 +37,8 @@
   },
   "dependencies": {
     "jsonc-simple-parser": "^2.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,7 +1,5 @@
 name: Release
 
-on: push
-
 env:
   CI: true
 

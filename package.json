@@ -9,6 +9,7 @@
   "files": [
     "lib"
   ],
+  "keywords": ["typescript"],
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"

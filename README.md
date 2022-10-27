@@ -1,22 +1,22 @@
-# tsc-files
+# tsc-files-ignore-imports
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gustavopch/tsc-files/Release?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/isawalhi/tsc-files/Release?style=flat-square)
 
-A tiny tool to run `tsc` on specific files with ignoring file imports and without ignoring `tsconfig.json`.
+A tiny tool to run `tsc` on specific files with ignoring the imports and without ignoring `tsconfig.json`.
 
 ## Installation
 
 ```sh
-npm i -D tsc-files
+npm i -D tsc-files-ignore-imports
 ```
 
 ```sh
-yarn add -D tsc-files
+yarn add -D tsc-files-ignore-imports
 ```
 
 ## Why
 
-I wanted to type-check **only the staged files** with [lint-staged](https://github.com/okonet/lint-staged).
+I wanted to type-check **only the staged files with ignoring imports and the imports of the imports** with [lint-staged](https://github.com/okonet/lint-staged).
 
 Unfortunately passing specific files like `tsc --noEmit file1.ts file2.ts` will cause TypeScript to simply ignore your `tsconfig.json`.
 
@@ -29,14 +29,14 @@ With lint-staged:
 ```json
 {
   "lint-staged": {
-    "**/*.ts": "tsc-files --noEmit"
+    "**/*.ts": "tsc-files-ignore-imports --noEmit"
   }
 }
 ```
 
 ## How it works
 
-For the most part, it just forwards all arguments to `tsc` with one exception: the specified files will not be forwarded — instead, they will be put at the `files` property of a temporary config that will be generated next to your original `tsconfig.json`. Other than that, just read `tsc --help`.
+For the most part, it just forwards all arguments to `tsc` with one exception: the specified files will not be forwarded — instead, they will be put at the `files` property of a temporary config that will be generated next to your original `tsconfig.json`. then it will filter out the errors and catch only the ones from the files.
 
 ## License
 

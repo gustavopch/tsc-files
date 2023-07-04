@@ -57,6 +57,21 @@ const tmpTsconfig = {
 }
 fs.writeFileSync(tmpTsconfigPath, JSON.stringify(tmpTsconfig, null, 2))
 
+// Attach cleanup handlers
+let didCleanup = false
+for (const eventName of ['exit', 'SIGHUP', 'SIGINT', 'SIGTERM']) {
+  process.on(eventName, exitCode => {
+    if (didCleanup) return
+    didCleanup = true
+
+    fs.unlinkSync(tmpTsconfigPath)
+
+    if (eventName !== 'exit') {
+      process.exit(exitCode)
+    }
+  })
+}
+
 // Type-check our files
 const { status } = spawnSync(
   resolveFromModule(
@@ -66,8 +81,5 @@ const { status } = spawnSync(
   ['-p', tmpTsconfigPath, ...remainingArgsToForward],
   { stdio: 'inherit' },
 )
-
-// Delete temp config file
-fs.unlinkSync(tmpTsconfigPath)
 
 process.exit(status)

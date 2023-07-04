@@ -74,10 +74,13 @@ for (const eventName of ['exit', 'SIGHUP', 'SIGINT', 'SIGTERM']) {
 
 // Type-check our files
 const { status } = spawnSync(
-  resolveFromModule(
-    'typescript',
-    `../.bin/tsc${process.platform === 'win32' ? '.cmd' : ''}`,
-  ),
+  // See: https://github.com/gustavopch/tsc-files/issues/44#issuecomment-1250783206
+  process.versions.pnp
+    ? 'tsc'
+    : resolveFromModule(
+        'typescript',
+        `../.bin/tsc${process.platform === 'win32' ? '.cmd' : ''}`,
+      ),
   ['-p', tmpTsconfigPath, ...remainingArgsToForward],
   { stdio: 'inherit' },
 )

@@ -6,10 +6,10 @@
   "author": "Gustavo P. Cardoso <https://twitter.com/gustavo_pch>",
   "repository": "github:gustavopch/tsc-files",
   "bin": {
-    "tsc-files": "lib/index.js"
+    "tsc-files": "cli.js"
   },
   "files": [
-    "lib"
+    "cli.js"
   ],
   "prettier": {
     "arrowParens": "avoid",

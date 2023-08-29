@@ -26,6 +26,9 @@ const argsProjectIndex = args.findIndex(arg =>
 const argsProjectValue =
   argsProjectIndex !== -1 ? args[argsProjectIndex + 1] : undefined
 
+const argsLeaveIncludesUntouched =
+  args.findIndex(arg => ['-i'].includes(arg)) !== -1
+
 const files = args.filter(file => /\.(ts|tsx)$/.test(file))
 if (files.length === 0) {
   process.exit(0)
@@ -53,7 +56,7 @@ const tmpTsconfig = {
     skipLibCheck: true,
   },
   files,
-  include: [],
+  ...(argsLeaveIncludesUntouched ? {} : { includes: [] }),
 }
 fs.writeFileSync(tmpTsconfigPath, JSON.stringify(tmpTsconfig, null, 2))
 

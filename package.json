@@ -22,5 +22,8 @@
   },
   "devDependencies": {
     "typescript": "4.1.3"
+  },
+  "dependencies": {
+    "minimatch": "^9.0.3"
   }
 }

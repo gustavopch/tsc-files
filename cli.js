@@ -73,16 +73,29 @@ for (const eventName of ['exit', 'SIGHUP', 'SIGINT', 'SIGTERM']) {
 }
 
 // Type-check our files
+
+// See: https://github.com/gustavopch/tsc-files/issues/44#issuecomment-1250783206
+let tscPath = process.versions.pnp
+  ? 'tsc'
+  : resolveFromModule(
+      'typescript',
+      `../.bin/tsc${process.platform === 'win32' ? '.cmd' : ''}`,
+    )
+let projectArg = tmpTsconfigPath
+
+if (process.platform === 'win32') {
+  if (tscPath.includes(' ')) {
+    tscPath = `"${tscPath}"`
+  }
+  if (projectArg.includes(' ')) {
+    projectArg = `"${projectArg}"`
+  }
+}
+
 const { status } = spawnSync(
-  // See: https://github.com/gustavopch/tsc-files/issues/44#issuecomment-1250783206
-  process.versions.pnp
-    ? 'tsc'
-    : resolveFromModule(
-        'typescript',
-        `../.bin/tsc${process.platform === 'win32' ? '.cmd' : ''}`,
-      ),
-  ['-p', tmpTsconfigPath, ...remainingArgsToForward],
-  { stdio: 'inherit' },
+  tscPath,
+  ['-p', projectArg, ...remainingArgsToForward],
+  { stdio: 'inherit', shell: process.platform === 'win32' },
 )
 
 process.exit(status)

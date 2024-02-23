@@ -17,6 +17,19 @@ const resolveFromRoot = (...paths) => {
   return join(process.cwd(), ...paths)
 }
 
+const getTsConfigForTypeScriptFile = (filePath) => {
+  let currentDirectory = dirname(filePath)
+  while (currentDirectory && currentDirectory !== '/' && currentDirectory !== '.') {
+    const tsconfigPath = join(currentDirectory, 'tsconfig.json')
+    if (fs.existsSync(tsconfigPath)) {
+      return tsconfigPath
+    }
+    currentDirectory = dirname(currentDirectory)
+  }
+
+  return resolveFromRoot('tsconfig.json')
+}
+
 const args = process.argv.slice(2)
 
 const argsProjectIndex = args.findIndex(arg =>
@@ -38,51 +51,58 @@ if (argsProjectIndex !== -1) {
 }
 
 // Load existing config
-const tsconfigPath = argsProjectValue || resolveFromRoot('tsconfig.json')
-const tsconfigContent = fs.readFileSync(tsconfigPath).toString()
-// Use 'eval' to read the JSON as regular JavaScript syntax so that comments are allowed
-let tsconfig = {}
-eval(`tsconfig = ${tsconfigContent}`)
+const tsconfigPaths = argsProjectValue ? [argsProjectValue] : new Set(files.map(getTsConfigForTypeScriptFile))
+for (const tsconfigPath of tsconfigPaths) {
+  const cwd = dirname(tsconfigPath)
+  const tsconfigContent = fs.readFileSync(tsconfigPath).toString()
+  // Use 'eval' to read the JSON as regular JavaScript syntax so that comments are allowed
+  let tsconfig = {}
+  eval(`tsconfig = ${tsconfigContent}`)
 
-// Write a temp config file
-const tmpTsconfigPath = resolveFromRoot(`tsconfig.${randomChars()}.json`)
-const tmpTsconfig = {
-  ...tsconfig,
-  compilerOptions: {
-    ...tsconfig.compilerOptions,
-    skipLibCheck: true,
-  },
-  files,
-  include: [],
-}
-fs.writeFileSync(tmpTsconfigPath, JSON.stringify(tmpTsconfig, null, 2))
+  // Write a temp config file
+  const tmpTsconfigPath = `tsconfig.${randomChars()}.json`
+  const tmpTsconfig = {
+    ...tsconfig,
+    compilerOptions: {
+      ...tsconfig.compilerOptions,
+      skipLibCheck: true,
+      noEmit: true,
+      declaration: true
+    },
+    files: files.map(file => file.replace(cwd + '/', '')),
+    include: [],
+  }
+  fs.writeFileSync(join(cwd, tmpTsconfigPath), JSON.stringify(tmpTsconfig, null, 2))
 
-// Attach cleanup handlers
-let didCleanup = false
-for (const eventName of ['exit', 'SIGHUP', 'SIGINT', 'SIGTERM']) {
-  process.on(eventName, exitCode => {
-    if (didCleanup) return
-    didCleanup = true
+  // Attach cleanup handlers
+  let didCleanup = false
+  for (const eventName of ['exit', 'SIGHUP', 'SIGINT', 'SIGTERM']) {
+    process.on(eventName, exitCode => {
+      if (didCleanup) return
+      didCleanup = true
 
-    fs.unlinkSync(tmpTsconfigPath)
+      fs.unlinkSync(join(cwd, tmpTsconfigPath))
 
-    if (eventName !== 'exit') {
-      process.exit(exitCode)
-    }
-  })
-}
+      if (eventName !== 'exit') {
+        process.exit(exitCode)
+      }
+    })
+  }
 
-// Type-check our files
-const { status } = spawnSync(
-  // See: https://github.com/gustavopch/tsc-files/issues/44#issuecomment-1250783206
-  process.versions.pnp
-    ? 'tsc'
-    : resolveFromModule(
+  // Type-check our files
+  const { status } = spawnSync(
+    // See: https://github.com/gustavopch/tsc-files/issues/44#issuecomment-1250783206
+    process.versions.pnp
+      ? 'tsc'
+      : resolveFromModule(
         'typescript',
         `../.bin/tsc${process.platform === 'win32' ? '.cmd' : ''}`,
       ),
-  ['-p', tmpTsconfigPath, ...remainingArgsToForward],
-  { stdio: 'inherit' },
-)
+    ['--build', join(cwd, tmpTsconfigPath), ...remainingArgsToForward],
+    { stdio: 'inherit' },
+  )
 
-process.exit(status)
+  if(status) {
+    process.exit(status)
+  }
+}
